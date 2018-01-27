@@ -5,6 +5,11 @@
  * @license GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Component\Router\RouterView;
+
 defined('_JEXEC') or die;
 
-//TODO
+class EcfirmNetBaseRouter extends RouterView
+{
+
+}

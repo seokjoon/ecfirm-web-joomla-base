@@ -5,6 +5,13 @@
  * @license GNU General Public License version 2 or later.
  */
 
+namespace Joomla\Component\EcfirmNetBase\Administrator\View;
+
 defined('_JEXEC') or die;
 
-//TODO
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+
+class EcListAdminHtmlView extends BaseHtmlView
+{
+
+}
