@@ -1,31 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<extension type="component" version="3.8" method="upgrade">
+<extension type="component" version="4.0" method="upgrade">
 	<name>COM_ECFIRMNETBASE</name>
-	<creationDate>2018-01-13</creationDate>
-	<author>m</author>
-	<authorEmail>your@email.com</authorEmail>
-	<authorUrl>http://your.url.com</authorUrl>
-	<copyright>A copyright</copyright>
-	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>1.0</version>
+	<creationDate>2018-01-27</creationDate>
+	<author>Seok Joon Lee</author>
+	<authorEmail>seokjoon@gmail.com</authorEmail>
+	<authorUrl>http://ecfirm.net/</authorUrl>
+	<copyright>Copyright (C) ecfirm.net. All rights reserved.</copyright>
+	<license>License GNU General Public License version 2 or later</license>
+	<version>4.0</version>
 	<description>COM_ECFIRMNETBASE_XML_DESCRIPTION</description>
 
 	<!-- Scripts to run on installation -->
 	<scriptfile>script.php</scriptfile>
-
-	<!-- Runs on install -->
-	<install>
-		<sql>
-			<file driver="mysql" charset="utf8">sql/install/mysql/mysql.sql</file>
-		</sql>
-	</install>
-
-	<!-- Runs on update -->
-	<update>
-		<schemas>
-			<schemapath type="mysql">sql/updates/mysql</schemapath>
-		</schemas>
-	</update>
 
 	<!-- Media files -->
 	<media folder="media/com_EcfirmNetBase" destination="com_EcfirmNetBase">
@@ -34,47 +20,41 @@
 		<folder>js</folder>
 	</media>
 
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.com_EcfirmNetBase.ini</language>
+	</languages>
+
 	<!-- Front-end files -->
 	<files folder="components/com_EcfirmNetBase">
-		<filename>EcfirmNetBase.php</filename>
-		<filename>controller.php</filename>
-		<folder>controllers</folder>
-		<folder>language</folder>
-		<folder>layouts</folder>
-		<folder>models</folder>
-		<folder>views</folder>
+		<filename>index.html</filename>
+		<filename>router.php</filename>
+		<filename>dispatcher.php</filename>
+		<folder>Controller</folder>
+		<folder>Helper</folder>
+		<folder>Model</folder>
+		<folder>View</folder>
 	</files>
 
 	<!-- Back-end files -->
 	<administration>
 		<!-- Menu entries -->
 		<menu view="EcfirmNetBase">COM_ECFIRMNETBASE</menu>
-		<submenu>
-			<!--
-				Note that all & must be escaped to &amp; for the file to be valid
-				XML and be parsed by the installer
-			-->
-			<menu link="option=com_EcfirmNetBase">COM_ECFIRMNETBASE</menu>
-		</submenu>
 
 		<!-- Core files -->
 		<files folder="administrator/components/com_EcfirmNetBase">
-			<filename>EcfirmNetBase.php</filename>
 			<filename>access.xml</filename>
 			<filename>config.xml</filename>
-			<filename>controller.php</filename>
-			<filename>LICENSE.txt</filename>
-			<folder>controllers</folder>
-			<folder>helpers</folder>
-			<folder>language</folder>
-			<folder>models</folder>
-			<folder>sql</folder>
-			<folder>views</folder>
+			<filename>dispatcher.php</filename>
+			<filename>index.html</filename>
+			<folder>Controller</folder>
+			<folder>Helper</folder>
+			<folder>Model</folder>
+			<folder>View</folder>
 		</files>
 	</administration>
 
-	<!-- Update servers -->
-	<updateservers>
-		<server type="extension" priority="1" name="EcfirmNetBase">https://www.example.com/EcfirmNetBase.xml</server>
-	</updateservers>
+	<languages folder="administrator/language">
+		<language tag="en-GB">en-GB/en-GB.com_EcfirmNetBase.ini</language>
+		<language tag="en-GB">en-GB/en-GB.com_EcfirmNetBase.sys.ini</language>
+	</languages>
 </extension>

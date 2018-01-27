@@ -5,10 +5,13 @@
  * @license GNU General Public License version 2 or later.
  */
 
-namespace Joomla\Component\EcfirmNetBase\Site\View;
+namespace Joomla\Component\EcfirmNetBase\Site\Controller;
+
+use Joomla\CMS\MVC\Controller\BaseController;
 
 defined('_JEXEC') or die;
 
-class EcListHtmlView extends EcHtmlView
+class EcListController extends BaseController
 {
+
 }

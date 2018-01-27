@@ -5,10 +5,12 @@
  * @license GNU General Public License version 2 or later.
  */
 
-namespace Joomla\Component\EcfirmNetBase\Site\View;
+namespace Joomla\Component\EcfirmNetBase\Site\Model;
+
+use Joomla\CMS\MVC\Model\ListModel;
 
 defined('_JEXEC') or die;
 
-class EcListHtmlView extends EcHtmlView
+class EcListModel extends ListModel
 {
 }

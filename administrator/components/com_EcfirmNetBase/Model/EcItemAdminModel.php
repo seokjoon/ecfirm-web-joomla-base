@@ -5,6 +5,8 @@
  * @license GNU General Public License version 2 or later.
  */
 
+namespace Joomla\Component\EcfirmNetBase\Administrator\Model;
+
 use Joomla\CMS\MVC\Model\AdminModel;
 
 defined('_JEXEC') or die;

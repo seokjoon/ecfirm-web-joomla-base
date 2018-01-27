@@ -9,9 +9,6 @@ namespace Joomla\Component\EcfirmNetBase\Administrator\View;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-
-class EcListAdminHtmlView extends BaseHtmlView
+class EcListAdminHtmlView extends EcAdminHtmlView
 {
-
 }
