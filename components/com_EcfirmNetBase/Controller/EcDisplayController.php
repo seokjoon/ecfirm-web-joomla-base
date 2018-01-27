@@ -5,7 +5,7 @@
  * @license GNU General Public License version 2 or later.
  */
 
-namespace Joomla\Component\Tvprod\Site\Controller;
+namespace Joomla\Component\EcfirmNetBase\Site\Controller;
 
 use Joomla\CMS\MVC\Controller\BaseController;
 
