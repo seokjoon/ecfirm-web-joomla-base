@@ -5,12 +5,10 @@
  * @license GNU General Public License version 2 or later.
  */
 
-namespace Joomla\Component\EcfirmNetBase\Site\Model;
-
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+namespace Joomla\Component\EcfirmNetBase\Site\View;
 
 defined('_JEXEC') or die;
 
-class EcItemModel extends BaseDatabaseModel
+class EcFormHtmlView extends EcHtmlView
 {
 }

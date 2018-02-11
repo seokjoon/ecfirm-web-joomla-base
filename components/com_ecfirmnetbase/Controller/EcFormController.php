@@ -7,11 +7,11 @@
 
 namespace Joomla\Component\EcfirmNetBase\Site\Controller;
 
-use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Controller\FormController;
 
 defined('_JEXEC') or die;
 
-class EcItemController extends BaseController
+class EcFormController extends FormController
 {
-
 }
+

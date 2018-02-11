@@ -11,7 +11,6 @@ use Joomla\CMS\MVC\Controller\BaseController;
 
 defined('_JEXEC') or die;
 
-class EcListController extends BaseController
+class EcController extends BaseController
 {
-
 }
