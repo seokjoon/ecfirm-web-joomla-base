@@ -11,5 +11,4 @@ use Joomla\CMS\MVC\Controller\AdminController;
 
 class EcListAdminController extends AdminController
 {
-
 }

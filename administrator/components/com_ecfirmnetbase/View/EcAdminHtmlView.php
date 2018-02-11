@@ -13,5 +13,4 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 class EcAdminHtmlView extends BaseHtmlView
 {
-
 }

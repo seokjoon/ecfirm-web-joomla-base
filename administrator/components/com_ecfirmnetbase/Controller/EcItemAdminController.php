@@ -13,5 +13,4 @@ defined('_JEXEC') or die;
 
 class EcItemAdminController extends FormController
 {
-
 }
