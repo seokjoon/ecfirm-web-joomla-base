@@ -14,18 +14,18 @@
 	<scriptfile>script.php</scriptfile>
 
 	<!-- Media files -->
-	<media folder="media/com_EcfirmNetBase" destination="com_EcfirmNetBase">
+	<media folder="media/com_ecfirmnetbase" destination="com_ecfirmnetbase">
 		<folder>css</folder>
 		<folder>images</folder>
 		<folder>js</folder>
 	</media>
 
 	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.com_EcfirmNetBase.ini</language>
+		<language tag="en-GB">en-GB/en-GB.com_ecfirmnetbase.ini</language>
 	</languages>
 
 	<!-- Front-end files -->
-	<files folder="components/com_EcfirmNetBase">
+	<files folder="components/com_ecfirmnetbase">
 		<filename>index.html</filename>
 		<filename>router.php</filename>
 		<filename>dispatcher.php</filename>
@@ -38,10 +38,10 @@
 	<!-- Back-end files -->
 	<administration>
 		<!-- Menu entries -->
-		<menu view="EcfirmNetBase">COM_ECFIRMNETBASE</menu>
+		<menu view="ecfirmnetbase">COM_ECFIRMNETBASE</menu>
 
 		<!-- Core files -->
-		<files folder="administrator/components/com_EcfirmNetBase">
+		<files folder="administrator/components/com_ecfirmnetbase">
 			<filename>access.xml</filename>
 			<filename>config.xml</filename>
 			<filename>dispatcher.php</filename>
@@ -54,7 +54,7 @@
 	</administration>
 
 	<languages folder="administrator/language">
-		<language tag="en-GB">en-GB/en-GB.com_EcfirmNetBase.ini</language>
-		<language tag="en-GB">en-GB/en-GB.com_EcfirmNetBase.sys.ini</language>
+		<language tag="en-GB">en-GB/en-GB.com_ecfirmnetbase.ini</language>
+		<language tag="en-GB">en-GB/en-GB.com_ecfirmnetbase.sys.ini</language>
 	</languages>
 </extension>
