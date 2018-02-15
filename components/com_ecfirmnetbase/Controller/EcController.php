@@ -24,6 +24,17 @@ abstract class EcController extends BaseController
 
 	protected $nameKey; //ex) example
 
+	/**
+	 * Constructor.
+	 * @param   array                $config   An optional associative array of configuration settings.
+	 * Recognized key values include 'name', 'default_task', 'model_path', and
+	 * 'view_path' (this list is not meant to be comprehensive).
+	 * @param   MVCFactoryInterface  $factory  The factory.
+	 * @param   CMSApplication       $app      The JApplication for the dispatcher
+	 * @param   \JInput              $input    Input
+	 * @since   3.0 BaseController
+	 * @Override
+	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
 		parent::__construct($config, $factory, $app, $input);
@@ -51,6 +62,15 @@ abstract class EcController extends BaseController
 		return $model->getItems();
 	}
 
+	/**
+	 * Method to get a model object, loading it if required.
+	 * @param   string  $name    The model name. Optional.
+	 * @param   string  $prefix  The class prefix. Optional.
+	 * @param   array   $config  Configuration array for model. Optional.
+	 * @return  BaseDatabaseModel|boolean  Model object on success; otherwise false on failure.
+	 * @since   3.0 BaseController
+	 * @Override
+	 */
 	public function getModel($name = '', $prefix = '', $config = array('ignore_request' => true))
 	{
 		if (empty($name)) $name = $this->entity;
@@ -95,6 +115,38 @@ abstract class EcController extends BaseController
 		return $app->getUserState($context, $default);
 	}
 
+	protected function setRedirectParams($params = array())
+	{
+		$prefix = 'index.php';
+		$option = (isset($params['option'])) ? '?option=com_' . $params['option'] : $option = '?option=com_' . $this->name;
+		$view = (isset($params['view'])) ? '&view=' . $params['view'] : '&view=' . ($this->input->get('view', null, 'string'));
+		$task = (isset($params['task'])) ? '&task=' . $params['task'] : '';
+		$key = ((isset($params['nameKey'])) && (isset($params['valueKey']))) ? '&' . $params['nameKey'] . '=' . $params['valueKey'] : '';
+		$format = (isset($params['format'])) ? '&format=' . $params['format'] :
+			'&format=' . ($this->input->get('format', 'html', 'string'));
+		$layout = (isset($params['layout'])) ? $params['layout'] : $this->input->get('layout', null, 'string');
+		$layout = (empty($layout)) ? '' : '&layout=' . $layout;
+		$tmpl = (isset($params['tmpl'])) ? $params['tmpl'] : $this->input->get('tmpl', null, 'string');
+		$tmpl = (empty($tmpl)) ? '' : '&tmpl=' . $tmpl;
+		$itemId = (isset($params['itemId'])) ? $params['itemId'] : EcUrl::getItemId();
+		$itemId = ($itemId > 0) ? '&Itemid=' . $itemId : '';
+		$etc = (isset($params['etc'])) ? '&' . $params['etc'] : '';
+		$url = (isset($url)) ? $params['url'] : $prefix . $option . $view . $task . $key . $format . $layout . $tmpl . $itemId . $etc;
+		$msg = (isset($params['msg'])) ? $params['msg'] : null;
+		$type = (isset($params['type'])) ? $params['type'] : null;
+		//EcDebug::lp($url, 'url'); EcDebug::lp($msg, 'msg'); EcDebug::lp($type, 'type');
+
+		$this->setRedirect($url, $msg, $type); //$this->setRedirect(JRoute::_($url));
+		//$this->redirect();
+	}
+
+	protected function setUserState($task, $key, $value)
+	{
+		$context = $this->option . '.' . $task . '.' . $this->nameKey . '.' . $key;
+		$app = Factory::getApplication();
+		$app->setUserState($context, $value);
+	}
+
 	protected function setViewModel($nameModel = null, $nameView = null)
 	{
 		$model = $this->getModel($nameModel);
@@ -104,12 +156,5 @@ abstract class EcController extends BaseController
 		$view = $this->getView($nameView, Factory::getDocument()->getType(), '', array('base_path' => $this->basePath, 'layout' => $layout));
 
 		return $view->setModel($model);
-	}
-
-	protected function setUserState($task, $key, $value)
-	{
-		$context = $this->option . '.' . $task . '.' . $this->nameKey . '.' . $key;
-		$app = Factory::getApplication();
-		$app->setUserState($context, $value);
 	}
 }
