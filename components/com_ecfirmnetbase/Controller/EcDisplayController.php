@@ -7,10 +7,8 @@
 
 namespace Joomla\Component\EcfirmNetBase\Site\Controller;
 
-use Joomla\CMS\MVC\Controller\BaseController;
-
 defined('_JEXEC') or die;
 
-class EcDisplayController extends BaseController
+abstract class EcDisplayController extends EcController
 {
 }

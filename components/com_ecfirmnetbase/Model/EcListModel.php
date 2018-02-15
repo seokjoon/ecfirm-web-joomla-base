@@ -11,6 +11,6 @@ use Joomla\CMS\MVC\Model\ListModel;
 
 defined('_JEXEC') or die;
 
-class EcListModel extends ListModel
+abstract class EcListModel extends ListModel
 {
 }

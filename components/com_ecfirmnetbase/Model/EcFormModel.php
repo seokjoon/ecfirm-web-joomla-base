@@ -11,7 +11,7 @@ use Joomla\Component\Config\Site\Model\FormModel;
 
 defined('_JEXEC') or die;
 
-class EcFormModel extends FormModel
+abstract class EcFormModel extends FormModel
 {
 
 	/**

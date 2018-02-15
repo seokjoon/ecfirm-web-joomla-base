@@ -11,6 +11,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
-class EcHtmlView extends BaseHtmlView
+abstract class EcHtmlView extends BaseHtmlView
 {
 }

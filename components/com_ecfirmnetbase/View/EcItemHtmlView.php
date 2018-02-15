@@ -9,6 +9,6 @@ namespace Joomla\Component\EcfirmNetBase\Site\View;
 
 defined('_JEXEC') or die;
 
-class EcItemHtmlView extends EcHtmlView
+abstract class EcItemHtmlView extends EcHtmlView
 {
 }

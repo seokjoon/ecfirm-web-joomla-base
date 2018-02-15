@@ -32,7 +32,7 @@ class EcConst
 
 	const USER_GROUP_SUPERUSER = 8;
 
-	private static $prefix = 'ec';
+	private static $prefix = 'ecfirmnet';
 
 	public static function getPrefix()
 	{

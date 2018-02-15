@@ -11,7 +11,7 @@ use Joomla\CMS\MVC\Controller\FormController;
 
 defined('_JEXEC') or die;
 
-class EcFormController extends FormController
+abstract class EcFormController extends FormController
 {
 }
 

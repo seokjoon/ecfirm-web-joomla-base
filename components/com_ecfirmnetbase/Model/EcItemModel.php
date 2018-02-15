@@ -11,6 +11,6 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 defined('_JEXEC') or die;
 
-class EcItemModel extends BaseDatabaseModel
+abstract class EcItemModel extends BaseDatabaseModel
 {
 }
