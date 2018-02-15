@@ -12,6 +12,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Utilities\ArrayHelper;
 
 defined('_JEXEC') or die;
@@ -195,7 +196,22 @@ abstract class EcFormController extends EcController //FormController
 		return true;
 	}
 
+	public function editForm()
+	{
+		////////internal redirect check
+		$prev = $this->getUserState('edit', 'turnback', null); //EcDebug::lp($prev, true);
+		if (((empty($prev))) || (!(Uri::isInternal($prev))))
+			jexit(Text::_('JLIB_APPLICATION_ERROR_UNHELD_ID'));
+		////////
 
+		$view = $this->getView($this->default_view, Factory::getDocument()->getType(), '', array(
+			'layout' => 'edit'
+		));
+
+		$view->setModel($this->getModel($this->nameKey));
+		$view->setModel($this->getModel($this->nameKey . 'form'));
+		$view->editForm();
+	}
 
 	/**
 	 * Function that allows child controller access to model data
@@ -256,7 +272,7 @@ abstract class EcFormController extends EcController //FormController
 			$form = $modelForm->getForm($data, false);
 			if (!($form)) {
 				$app->enqueueMessage($modelForm->getError(), 'error');
-				throw new Exception('TODO modelForm empty error'); //FIXME
+				throw new Exception('TODO modelForm empty error'); //TODO
 			}
 
 			$validData = $modelForm->validate($form, $data); //EcDebug::log($validData);
@@ -268,7 +284,7 @@ abstract class EcFormController extends EcController //FormController
 						$app->enqueueMessage($errors[$i]->getMessage(), 'warning');
 					else $app->enqueueMessage($errors[$i], 'warning');
 				$this->setUserState('edit', 'data', $data);
-				throw new Exception('TODO modelForm valid error'); //FIXME
+				throw new Exception('TODO modelForm valid error'); //TODO
 			}
 			////////
 
@@ -277,20 +293,57 @@ abstract class EcFormController extends EcController //FormController
 				throw new Exception(Text::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $model->getError()));
 			}
 		} catch (Exception $e) {
-			$this->setMessage($e->getMessage(), 'error');
+			$app->enqueueMessage($e->getMessage(), 'error');
+			$this->setMessage(strtoupper(Text::_($this->option . '_' . $this->nameKey . '_SAVE_FAILURE')), 'error');
 			return false;
 		}
 
-		$postfix = ($data[$nameKey] == 0) ? '_SUBMIT' : '_SAVE_SUCCESS';
-		$msg = strtoupper($this->option) . $postfix;
-
-		$this->setMessage(Text::_($msg));
+		$this->setMessage(strtoupper(Text::_($this->option . '_' . $this->nameKey . '_SAVE_SUCCESS')));
 		$this->setUserState('edit', 'data', null);
+
+		$this->turnbackPop('edit');
 
 		$this->postSaveHook($model, $validData);
 
 		return true;
 	}
 
+	//TODO: saveFile(), saveFileImg*()
+
+	protected function turnbackPop($task = null)
+	{
+		if (empty($task)) $task = $this->task;
+		$turnback = $this->getUserState($task, 'turnback', null);
+
+		$this->setUserState($task, 'turnback', null);
+
+		if ($turnback == Uri::getInstance()->toString())
+			$turnback = Uri::base(); //avoid inifite loop
+
+		if (!(empty($turnback))) $this->setRedirect($turnback);
+	}
+
+	protected function turnbackPush($task = null, $url = null)
+	{
+		if(empty($task)) $task = $this->task;
+
+		if(empty($url)) $url = Uri::getInstance()->toString();
+
+		$this->setUserState($task, 'turnback', $url);
+	}
+
+	public function useForm($layout = null)
+	{
+		//TODO internal redirect check
+		if(empty($layout)) $layout = $this->nameKey;
+
+		$view = $this->getView($layout, Factory::getDocument()->getType(), '', array(
+			'layout' => $layout . 'form'
+		));
+
+		//$view->setModel($this->getModel($this->nameKey));
+		$view->setModel($this->getModel($layout . 'form')); //EcDebug::lp($view);
+		$view->useForm($layout . 'form');
+	}
 }
 
