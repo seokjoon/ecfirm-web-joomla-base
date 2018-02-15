@@ -42,6 +42,7 @@ abstract class EcController extends BaseController
 		$uri = Uri::getInstance();
 		$this->option = $uri->getVar('option');
 		$this->nameKey = str_replace('com_' . EcConst::getPrefix(), '', $this->option);
+		//$this->nameKey = $this->getModel()->getTable()->getKeyName();
 		$this->entity = $uri->getVar('view', $uri->getVar('task', $this->option));
 	}
 
