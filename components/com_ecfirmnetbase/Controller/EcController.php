@@ -37,7 +37,6 @@ abstract class EcController extends BaseController
 	 * @param   CMSApplication       $app      The JApplication for the dispatcher
 	 * @param   \JInput              $input    Input
 	 * @since   3.0 BaseController
-	 * @Override
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -151,7 +150,6 @@ abstract class EcController extends BaseController
 	 * @param   array   $config  Configuration array for model. Optional.
 	 * @return  BaseDatabaseModel|boolean  Model object on success; otherwise false on failure.
 	 * @since   3.0 BaseController
-	 * @Override
 	 */
 	public function getModel($name = '', $prefix = '', $config = array('ignore_request' => true))
 	{
