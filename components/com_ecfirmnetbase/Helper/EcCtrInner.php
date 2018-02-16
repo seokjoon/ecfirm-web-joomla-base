@@ -8,6 +8,7 @@
 namespace Joomla\Component\EcfirmNetBase\Site\Helper;
 
 use Exception;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Component\EcfirmNetBase\Site\Controller\EcController;
 
 defined('_JEXEC') or die();
@@ -27,6 +28,9 @@ abstract class EcCtrInner
 		self::$nameKey = $nameKey;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	protected function getControllerLegacy($nameCom)
 	{
 		$nameCom = (empty($nameCom)) ? self::$nameCom : $nameCom;
@@ -51,6 +55,27 @@ abstract class EcCtrInner
 	}
 
 	public function getModel($nameKey = null)
+	{
+		if (empty($nameKey)) $nameKey = self::$nameKey;
+		$modelPrefix = ucfirst(EcConst::getPrefix()) . 'Model';
+		$model = BaseDatabaseModel::getInstance($nameKey, $modelPrefix);
+
+		//////// for outside component BEGIN
+		if(empty($model)) {
+			$config = array('table_path' => JPATH_ADMINISTRATOR . '/components/com_' . EcConst::getPrefix() . '/tables');
+			require_once JPATH_SITE . '/components/com_nspt/models/' . lcfirst($nameKey) . '.php';
+			$modelName = $modelPrefix . $nameKey;
+			$model = new $modelName($config);
+		}
+		//////// for outside component END
+
+		return $model;
+	}
+
+	/**
+	 * @deprecated
+	 */
+	public function getModelLegacy($nameKey = null)
 	{
 		if (empty($nameKey)) $nameKey = self::$nameKey;
 

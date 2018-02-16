@@ -12,6 +12,9 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Component\EcfirmNetBase\Site\Helper\EcFile;
+use Joomla\Component\EcfirmNetBase\Site\Helper\EcFileImg;
+use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 
 defined('_JEXEC') or die;
@@ -173,7 +176,105 @@ abstract class EcFormController extends EcController //FormController
 		return $bool;
 	}
 
-	//TODO: saveFile(), saveFileImg*()
+	/**
+	 * @deprecated
+	 */
+	protected function saveFile()
+	{
+		$files = $this->input->files->get('jform');
+		if ($files['file']['error'] != 0)
+			return false;
+		$jform = $this->input->post->get('jform', array(), 'array');
+
+		//$files = EcFile::setFileByUser($files['file'], $this->nameKey);
+		$files = EcFile::setFileByName($files['file'], $this->nameKey);
+
+		$jform['files'] = json_encode($files, JSON_UNESCAPED_SLASHES);
+
+		$this->input->post->set('jform', $jform);
+
+		return true;
+	}
+
+	/**
+	 * @deprecated
+	 */
+	protected function saveFileImg($nameCol = 'img', $ratio = false)
+	{
+		$files = $this->input->files->get('jform'); //EcDebug::lp($files, true);
+		if($files[$nameCol]['error'] != 0) return false;
+
+		$jform = $this->input->post->get('jform', array(), 'array');
+
+		$files[$nameCol]['ratio'] = $ratio; //if($isRatio) $files[$nameCol]['ratio'] = $isRatio;
+		$imgs = (array) EcFileImg::setFileImgByName($files[$nameCol], $this->nameKey, $nameCol); //EcDebug::lp($imgs); jexit();
+
+		//$jform['imgs'] = json_encode($imgsArray, JSON_UNESCAPED_SLASHES);
+		$reg = new Registry();
+		if(!(empty($jform['imgs']))) $reg->loadString($jform['imgs']);
+		$reg->loadArray($imgs);
+		$jform['imgs'] = stripslashes($reg->toString()); //EcDebug::log($jform);
+
+		$this->input->post->set('jform', $jform);
+
+		return true;
+	}
+
+	/**
+	 * @deprecated
+	 */
+	protected function saveFileImgs($nameCol = 'img', $ratio = false)
+	{
+		$files = $this->input->files->get('jform'); //EcDebug::log('----'); EcDebug::log(json_encode($files), __method__);
+		if (count($files) == 0) return false;
+		$imgs = array();
+
+		foreach ($files[$nameCol] as &$file) { //EcDebug::log($file, __method__);
+			if(((strpos($file['type'], 'image')) === false) || ($file['error'] != 0)) return false;
+			$file['ratio'] = $ratio;
+			array_push($imgs, EcFileImg::setFileImgByName($file, $this->nameKey, $nameCol));
+		} //EcDebug::log(json_encode($imgs), __method__);
+
+		$jform = $this->input->post->get('jform', array(), 'array'); //EcDebug::log(json_encode($jform), __method__);
+		$reg = new Registry();
+		if (!(empty($jform['imgs']))) $reg->loadString($jform['imgs']);
+		$reg->loadArray($imgs);
+		$jform['imgs'] = stripslashes($reg->toString()); //EcDebug::log($jform['imgs'], __method__);
+
+		$this->input->post->set('jform', $jform);
+
+		return true;
+	}
+
+	/**
+	 * @deprecated
+	 */
+	protected function saveFileImgsLegacy()
+	{
+		$files = $this->input->files->get('jform'); //EcDebug::lp($files, true);
+		if (count($files) == 0) return false;
+
+		$jform = $this->input->post->get('jform', array(), 'array');
+
+		$imgs = array();
+		foreach ($files as $nameCol => $file) { //EcDebug::lp($file, true);
+			if ((strpos($file['type'], 'image')) === false) continue;
+			if ($file['error'] != 0) continue;
+
+			$outs = EcFileImg::setFileImgByName($file, $this->nameKey, $nameCol);
+
+			foreach ($outs as $k => $out) $imgs[$k] = $out;
+		}
+
+		$reg = new Registry();
+		if (!(empty($jform['imgs']))) $reg->loadString($jform['imgs']);
+		$reg->loadArray($imgs);
+		$jform['imgs'] = stripslashes($reg->toString()); //EcDebug::log($jform);
+
+		$this->input->post->set('jform', $jform);
+
+		return true;
+	}
 
 	protected function turnbackPop($task = null)
 	{
