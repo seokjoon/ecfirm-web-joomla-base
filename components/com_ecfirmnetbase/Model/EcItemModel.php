@@ -7,6 +7,7 @@
 
 namespace Joomla\Component\EcfirmNetBase\Site\Model;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ItemModel;
@@ -177,8 +178,64 @@ abstract class EcItemModel extends ItemModel //BaseDatabaseModel
 	 */
 	public function save($data)
 	{
+		/* if ((isset($data['options'])) && (is_array($data['options']))) {
+			$reg = new Registry();
+			$reg->loadArray($data['options']);
+			$data['options'] = (string) $reg;
+		} */
 
+		$table = $this->getTable();
 
+		$nameKey = $table->getKeyName();
+		$valueKey = (!(empty($data[$nameKey]))) ? $data[$nameKey] : 0;
+		$isNew = true;
 
+		if ($this->getState('enabledPlugin', false)) {
+			//$dispatcher = JEventDispatcher::getInstance();
+			PluginHelper::importPlugin(EcConst::getPrefix()); //('ec');
+		}
+
+		try {
+			if ($valueKey > 0) {
+				$table->load($valueKey);
+				$isNew = false;
+			}
+
+			if (!($table->bind($data))) {
+				$this->setError($table->getError());
+				return false;
+			}
+
+			//$this->prepareTable($table);
+			if (!($table->check())) {
+				$this->setError($table->getError());
+				return false;
+			}
+
+			if ($this->getState('enabledPlugin', false)) {
+				//$result = $dispatcher->trigger('on' . $this->name . 'BeforeSave', array(
+				$result = Factory::getApplication()->triggerEvent('on' . ucfirst($this->name) . 'BeforeSave', array($this->context, $table, $isNew, $data));
+				if (in_array(false, $result, true)) {
+					$this->setError($table->getError());
+					return false;
+				}
+			}
+
+			if (!($table->store())) {
+				$this->setError($table->getError());
+				return false;
+			}
+
+			$this->cleanCache();
+
+			if ($this->getState('enabledPlugin', false))
+				//$dispatcher->trigger('on' . $this->name . 'AfterSave', array(
+				Factory::getApplication()->triggerEvent('on' . $this->name . 'AfterSave', array($this->context, $table, $isNew));
+		} catch (Exception $e) {
+			$this->setError($e->getMessage());
+			return false;
+		}
+
+		return true;
 	}
 }

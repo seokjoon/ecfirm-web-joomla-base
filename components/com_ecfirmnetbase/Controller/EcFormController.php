@@ -7,7 +7,6 @@
 
 namespace Joomla\Component\EcfirmNetBase\Site\Controller;
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
@@ -15,7 +14,6 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Component\EcfirmNetBase\Site\Helper\EcFile;
 use Joomla\Component\EcfirmNetBase\Site\Helper\EcFileImg;
 use Joomla\Registry\Registry;
-use Joomla\Utilities\ArrayHelper;
 
 defined('_JEXEC') or die;
 
