@@ -7,10 +7,10 @@
 
 namespace Joomla\Component\EcfirmNetBase\Administrator\Model;
 
-use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\Component\EcfirmNetBase\Site\Model\EcListModel;
 
 defined('_JEXEC') or die;
 
-class EcListAdminModel extends ListModel
+class EcListAdminModel extends EcListModel //ListModel
 {
 }
