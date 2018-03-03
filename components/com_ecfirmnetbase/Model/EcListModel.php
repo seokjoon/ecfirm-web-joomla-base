@@ -23,12 +23,12 @@ abstract class EcListModel extends ListModel
 	 * @return  array  Associative array in the format: array('filter_published' => 0)
 	 * @since   3.2 ListModel
 	 */
-	public function getActiveFilters()
+	/* public function getActiveFilters()
 	{
 		return array(
 			'filter_published' => 0
 		); //return parent::getActiveFilters();
-	}
+	} */ //FIXME
 
 	/**
 	 * Method to get a store id based on the model configuration state.

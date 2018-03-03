@@ -12,6 +12,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\Component\EcfirmNetBase\Site\Helper\EcConst;
+use Joomla\Component\EcfirmNetBase\Site\Helper\EcDebug;
 use Joomla\Utilities\ArrayHelper;
 
 defined('_JEXEC') or die;
@@ -82,9 +83,9 @@ class EcItemAdminModel extends AdminModel
 	public function getForm($data = array(), $loadData = true)
 	{
 		if ((!(isset($this->context))) || (empty($this->context)))
-			$this->context = $this->option . '.' . $this->nameKey;
+			$this->context = $this->option . '.' . $this->name;
 
-		$form = $this->loadForm($this->context, $this->nameKey, array(
+		$form = $this->loadForm($this->context, $this->name, array(
 			'control' => 'jform',
 			'load_data' => $loadData
 		));

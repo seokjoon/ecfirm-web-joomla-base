@@ -10,11 +10,10 @@ namespace Joomla\Component\EcfirmNetBase\Administrator\Helper;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
-use Joomla\Component\Content\Administrator\Helper\ContentHelper;
 
 defined('_JEXEC') or die;
 
-class EcAdminHelper extends ContentHelper
+class EcAdminHelper
 {
 
 	/**
