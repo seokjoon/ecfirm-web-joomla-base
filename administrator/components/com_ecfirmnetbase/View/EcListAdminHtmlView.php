@@ -52,7 +52,7 @@ class EcListAdminHtmlView extends EcAdminHtmlView
 		$this->items = $this->get('Items');
 		$this->pagination = $this->get('Pagination');
 		$this->filterForm = $this->get('FilterForm');
-		$this->activeFilters = $this->get('ActiveFilters');
+		//$this->activeFilters = $this->get('ActiveFilters');
 
 		if (count($errors = $this->get('Errors')))
 			throw new JViewGenericdataexception(implode("\n", $errors), 500);
